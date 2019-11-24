@@ -13,8 +13,20 @@ export default class Game {
   }
 
   start() {
-    // this.cards = this.generateCards();
-    this.renderer.drawRect(30, 30);
+    this.renderer.drawCard(50, 50, 100, 1 / 1.5, 0, 0, 0, 0);
+    this.renderer.drawCard(175, 50, 100, 1 / 1.5, 1, 0, 0, 0);
+    this.renderer.drawCard(300, 50, 100, 1 / 1.5, 2, 0, 0, 0);
+    this.renderer.drawCard(425, 50, 100, 1 / 1.5, 2, 0, 0, 0);
+
+    this.renderer.drawCard(50, 225, 100, 1 / 1.5, 0, 0, 0, 1);
+    this.renderer.drawCard(175, 225, 100, 1 / 1.5, 1, 1, 0, 1);
+    this.renderer.drawCard(300, 225, 100, 1 / 1.5, 2, 2, 0, 1);
+    this.renderer.drawCard(425, 225, 100, 1 / 1.5, 2, 2, 0, 1);
+
+    this.renderer.drawCard(50, 400, 100, 1 / 1.5, 0, 0, 0, 2);
+    this.renderer.drawCard(175, 400, 100, 1 / 1.5, 1, 1, 0, 2);
+    this.renderer.drawCard(300, 400, 100, 1 / 1.5, 2, 2, 0, 2);
+    this.renderer.drawCard(425, 400, 100, 1 / 1.5, 2, 2, 0, 2);
   }
 
   /** Checks if given triple is valid triad */
