@@ -13,20 +13,18 @@ export default class Game {
   }
 
   start() {
-    this.renderer.drawCard(50, 50, 100, 1 / 1.5, 0, 0, 0, 0);
-    this.renderer.drawCard(175, 50, 100, 1 / 1.5, 1, 0, 0, 0);
-    this.renderer.drawCard(300, 50, 100, 1 / 1.5, 2, 0, 0, 0);
-    this.renderer.drawCard(425, 50, 100, 1 / 1.5, 2, 0, 0, 0);
+    this.cards = this.utils.generateCards();
+    this.calculateCardsPositions();
 
-    this.renderer.drawCard(50, 225, 100, 1 / 1.5, 0, 0, 0, 1);
-    this.renderer.drawCard(175, 225, 100, 1 / 1.5, 1, 1, 0, 1);
-    this.renderer.drawCard(300, 225, 100, 1 / 1.5, 2, 2, 0, 1);
-    this.renderer.drawCard(425, 225, 100, 1 / 1.5, 2, 2, 0, 1);
+    for (let i in this.cardsPositions) {
+      this.drawCard(i, this.cards[i]);
+    }
+  }
 
-    this.renderer.drawCard(50, 400, 100, 1 / 1.5, 0, 0, 0, 2);
-    this.renderer.drawCard(175, 400, 100, 1 / 1.5, 1, 1, 0, 2);
-    this.renderer.drawCard(300, 400, 100, 1 / 1.5, 2, 2, 0, 2);
-    this.renderer.drawCard(425, 400, 100, 1 / 1.5, 2, 2, 0, 2);
+  /** Draws exact card on exact place */
+  drawCard(index, card) {
+    const coords = this.cardsPositions[index];
+    this.renderer.drawCard(...coords, 100, 1 / 1.5, ...card);
   }
 
   /** Checks if given triple is valid triad */
@@ -48,5 +46,25 @@ export default class Game {
     }
 
     return score === 4;
+  }
+
+  /** "Calculates" coordinates for the set of cards.  */
+  calculateCardsPositions() {
+    // It was calculated, but now it's just cached
+    const cachedCoords = [
+      [50, 50],
+      [175, 50],
+      [300, 50],
+      [425, 50],
+      [50, 225],
+      [175, 225],
+      [300, 225],
+      [425, 225],
+      [50, 400],
+      [175, 400],
+      [300, 400],
+      [425, 400],
+    ];
+    this.cardsPositions = cachedCoords;
   }
 }
