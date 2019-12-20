@@ -3,7 +3,8 @@ import Utils from './utils.module.js';
 
 export default class Game {
   constructor(canvasElementId) {
-    this.renderer = new Render(canvasElementId);
+    this.canvasElement = document.getElementById(canvasElementId);
+    this.renderer = new Render(this.canvasElement);
     this.utils = new Utils(3, 3, 3, 3);
 
     this.selection = [];
@@ -19,7 +20,14 @@ export default class Game {
     for (let i in this.cardsPositions) {
       this.drawCard(i, this.cards[i]);
     }
+
+    // Add Event Listeners
+    // this.canvasElement.addEventListener('click', (event) => {
+    //   console.log(event.pageX, event.pageY);
+    // }, false);
   }
+
+  
 
   /** Draws exact card on exact place */
   drawCard(index, card) {
@@ -46,6 +54,11 @@ export default class Game {
     }
 
     return score === 4;
+  }
+
+  /** Returns element that clicked */
+  clickedElement(clickX, clickY) {
+    // Calculate card's boundaries & track clicking
   }
 
   /** "Calculates" coordinates for the set of cards.  */

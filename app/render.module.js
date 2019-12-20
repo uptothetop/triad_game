@@ -1,7 +1,7 @@
 /** Class that renders game. */
 export default class Render {
-  constructor(canvasElementId) {
-    this.context = document.getElementById(canvasElementId).getContext('2d');
+  constructor(canvasElement) {
+    this.context = canvasElement.getContext('2d');
 
     //TODO: Calculate card size
     this.cardSize = 100; // Card is 1:2, e.g. Y=2X
@@ -107,11 +107,12 @@ export default class Render {
 
     for (let i = 0; i <= num; i++) {
       offset = (num - i) * figureSize;
+      // console.log(num, offset);
 
       // Draw figure
       switch (type) {
         case 0:
-          this.triangle(x + centerX - figureSize / 2, y + centerY - figureSize / 2 + offset, figureSize - padding);
+          this.triangle(x + centerX - figureSize / 2, y  + centerY - figureSize / 2 + offset, figureSize - padding);
           break;
         case 1:
           const r = figureSize / 2;
