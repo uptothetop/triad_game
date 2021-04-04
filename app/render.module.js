@@ -8,6 +8,12 @@ export default class Render {
     this.aspectY = 2;
     this.margin = 20;
 
+    this.offsets = {
+      0: [0],
+      1: [-.5, .5],
+      2: [-1, 0, 1],
+    };
+
     // Cache pattern canvas
     this.patternCanvas = document.createElement('canvas');
     this.patternCanvas.width = 1;
@@ -79,7 +85,7 @@ export default class Render {
 
     // This will be definitely refactored
     const centerX = w / 2;
-    const figureSize = h / 3;
+    const figureSize = h / 3.5;
     const centerY = h / 2;
 
     let offset = 0;
@@ -106,8 +112,10 @@ export default class Render {
     }
 
     for (let i = 0; i <= num; i++) {
-      offset = (num - i) * figureSize;
-      // console.log(num, offset);
+      const mul = this.offsets[num][i];
+
+      offset = mul * figureSize;
+      // console.log({num, i, mul, offset});
 
       // Draw figure
       switch (type) {
