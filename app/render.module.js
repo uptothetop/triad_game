@@ -5,7 +5,6 @@ export default class Render {
 
     //TODO: Calculate card size
     this.cardSize = 100; // Card is 1:2, e.g. Y=2X
-    this.aspectY = 2;
     this.margin = 20;
 
     this.offsets = {
@@ -41,6 +40,11 @@ export default class Render {
     this.patternContext.fillRect(0, 0, 2, 2);
   }
 
+  /** Clears the screen */
+  clear() {
+    this.context.clearRect(0, 0, this.patternCanvas.width, this.patternCanvas.height);
+  }
+
   // Drawings
 
   /** Draws a rect */
@@ -72,21 +76,19 @@ export default class Render {
   }
 
   /** Draws card */
-  drawCard(x, y, w, aspectRatio, type, color, num, fill) {
-    const h = w / aspectRatio;
-
+  drawCard(x, y, type, color, num, fill) {
     // Draw card body
     this.fill = '#eee';
     this.borderColor = '#000';
     this.borderWidth = 1;
-    this.rect(x, y, w, h);
+    this.rect(x, y, this.cardWidth, this.cardHeight);
 
     // Calculate positions for the figures
 
     // This will be definitely refactored
-    const centerX = w / 2;
-    const figureSize = h / 3.5;
-    const centerY = h / 2;
+    const centerX = this.cardWidth / 2;
+    const figureSize = this.cardHeight / 3.5;
+    const centerY = this.cardHeight / 2;
 
     let offset = 0;
     const padding = 5;
@@ -133,5 +135,7 @@ export default class Render {
           break;
       }
     }
+
+    return {x, y, xw: x + this.cardWidth, yh: y + this.cardHeight}
   }
 }

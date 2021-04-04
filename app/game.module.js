@@ -11,28 +11,42 @@ export default class Game {
     this.cards = [];
     this.message = '';
     this.loading = true;
+
+    this.cardAspect = 1.5;
+    this.cardWidth = 100;
+    this.cardHeight = this.cardWidth * this.cardAspect;
+
+    this.renderer.cardWidth = this.cardWidth;
+    this.renderer.cardHeight = this.cardHeight;
+    this.renderer.cardAspect = this.cardAspect;
   }
 
   start() {
-    this.cards = this.utils.generateCards();
+    const generated = this.utils.generateCards()
+    this.cards = generated[0];
+    this.cardsIndexes = generated[1];
     this.calculateCardsPositions();
 
+    this.drawCards();
+
+    // Add Event Listeners
+    this.canvasElement.addEventListener('click', (event) => {
+      this.clickedElement(event.pageX, event.pageY);
+    }, false);
+  }
+
+  /** Refreshes the playing field */
+  drawCards() {
+    this.renderer.clear();
     for (let i in this.cardsPositions) {
       this.drawCard(i, this.cards[i]);
     }
-
-    // Add Event Listeners
-    // this.canvasElement.addEventListener('click', (event) => {
-    //   console.log(event.pageX, event.pageY);
-    // }, false);
   }
-
-  
 
   /** Draws exact card on exact place */
   drawCard(index, card) {
     const coords = this.cardsPositions[index];
-    this.renderer.drawCard(...coords, 100, 1 / 1.5, ...card);
+    this.renderer.drawCard(coords[0], coords[1], ...card);
   }
 
   /** Checks if given triple is valid triad */
@@ -44,6 +58,11 @@ export default class Game {
     ]);
 
     return elements.size === 3 || elements.size === 1;
+  }
+
+  /** Removes the card */
+  removeCard(index) {
+    //TODO: Implement me
   }
 
   /** Checks if the selected combination is correct. */
@@ -58,26 +77,57 @@ export default class Game {
 
   /** Returns element that clicked */
   clickedElement(clickX, clickY) {
-    // Calculate card's boundaries & track clicking
+    const cardIndex = this.cardsPositions.findIndex(card => (clickX >= card[0] && clickY >= card[1] && clickX <= card[2] && clickY <= card[3]));
+
+    // No card is clicked
+    if (cardIndex === -1) { return false; }
+
+    const selIndex = this.selection.indexOf(cardIndex);
+
+    if (selIndex > -1) {
+      this.selection.splice(selIndex);
+    } else {
+      if (this.selection.length < 3) {
+        this.selection.push(cardIndex);
+
+        if(this.selection.length === 3) {
+          const isTriad = this.isTriad();
+
+          console.log({isTriad});
+        }
+      }
+    }
   }
 
   /** "Calculates" coordinates for the set of cards.  */
   calculateCardsPositions() {
     // It was calculated, but now it's just cached
     const cachedCoords = [
-      [50, 50],
-      [175, 50],
-      [300, 50],
-      [425, 50],
-      [50, 225],
-      [175, 225],
-      [300, 225],
-      [425, 225],
-      [50, 400],
-      [175, 400],
-      [300, 400],
-      [425, 400],
+        [50,  50, 150, 200 ],
+        [175, 50, 275, 200 ],
+        [300, 50, 400, 200 ],
+        [425, 50, 525, 200 ],
+        [50, 225, 150, 375 ],
+        [175, 225, 275, 375 ],
+        [300, 225, 400, 375 ],
+        [425, 225, 525, 375 ],
+        [50, 400, 150, 550 ],
+        [175, 400, 275, 550 ],
+        [300, 400, 400, 550 ],
+        [425, 400, 525, 550 ]
     ];
+
+    // const x = [];
+    // cachedCoords.forEach(coord => {
+    //   const prep = [
+    //     coord[0],
+    //     coord[1],
+    //     coord[0] + this.cardWidth,
+    //     coord[1] + this.cardHeight,
+    //   ];
+    //   x.push(prep);
+    // });
+    // console.log([x]);
     this.cardsPositions = cachedCoords;
   }
 }

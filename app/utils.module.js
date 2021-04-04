@@ -34,6 +34,6 @@ export default class Utils {
       }
     }
 
-    return cache;
+    return [cache, indexes];
   }
 }
