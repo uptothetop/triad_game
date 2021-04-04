@@ -39,14 +39,18 @@ export default class Game {
   drawCards() {
     this.renderer.clear();
     for (let i in this.cardsPositions) {
-      this.drawCard(i, this.cards[i]);
+      
+      const selected = this.selection.indexOf(i - 0) > -1;
+      console.log({i, s: this.selection, selected});
+
+      this.drawCard(i, this.cards[i], selected);
     }
   }
 
   /** Draws exact card on exact place */
-  drawCard(index, card) {
+  drawCard(index, card, selected = false) {
     const coords = this.cardsPositions[index];
-    this.renderer.drawCard(coords[0], coords[1], ...card);
+    this.renderer.drawCard(coords[0], coords[1], ...card, selected);
   }
 
   /** Checks if given triple is valid triad */
@@ -97,6 +101,9 @@ export default class Game {
         }
       }
     }
+
+    // Redraw cards
+    this.drawCards();
   }
 
   /** "Calculates" coordinates for the set of cards.  */
