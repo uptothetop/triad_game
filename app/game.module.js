@@ -39,10 +39,7 @@ export default class Game {
   drawCards() {
     this.renderer.clear();
     for (let i in this.cardsPositions) {
-      
       const selected = this.selection.indexOf(i - 0) > -1;
-      console.log({i, s: this.selection, selected});
-
       this.drawCard(i, this.cards[i], selected);
     }
   }

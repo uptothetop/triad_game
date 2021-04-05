@@ -79,7 +79,6 @@ export default class Render {
   drawCard(x, y, type, color, num, fill, selected) {
     // Draw card body
     this.fill = '#eee';
-    console.log({selected});
     // FIXME: borderColor shares the color
     // this.borderColor = (selected) ? '#f00' : '#000';
     this.borderColor = '#000';
