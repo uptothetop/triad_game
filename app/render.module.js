@@ -49,8 +49,11 @@ export default class Render {
 
   /** Draws a rect */
   rect(x, y, wx, wy) {
-    this.context.fillRect(x, y, wx, wy);
+    this.context.beginPath();
     this.context.rect(x, y, wx, wy);
+    this.context.closePath();
+
+    this.context.fill();
     this.context.stroke();
   }
 
@@ -58,21 +61,22 @@ export default class Render {
   circle(x, y, r) {
     this.context.beginPath();
     this.context.arc(x, y, r, 0, 2 * Math.PI);
-    this.context.stroke();
+    this.context.closePath();
+
     this.context.fill();
+    this.context.stroke();
   }
 
   /** Draws a triangle */
   triangle(x, y, s) {
     this.context.beginPath();
     this.context.moveTo(x, y + s);
-
     this.context.lineTo(x + s, y + s);
     this.context.lineTo(x + s / 2, y);
     this.context.closePath();
 
-    this.context.stroke();
     this.context.fill();
+    this.context.stroke();
   }
 
   /** Draws card */
