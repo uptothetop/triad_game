@@ -84,10 +84,10 @@ export default class Render {
     // Draw card body
     this.fill = '#eee';
     // FIXME: borderColor shares the color
-    // this.borderColor = (selected) ? '#f00' : '#000';
-    this.borderColor = '#000';
-    this.borderWidth = 1;
+    this.borderColor = (selected) ? '#00f' : '#888';
+    this.borderWidth = 2;
     this.rect(x, y, this.cardWidth, this.cardHeight);
+    this.borderColor = '#888';
 
     // Calculate positions for the figures
 

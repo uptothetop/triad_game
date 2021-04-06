@@ -86,7 +86,7 @@ export default class Game {
     const selIndex = this.selection.indexOf(cardIndex);
 
     if (selIndex > -1) {
-      this.selection.splice(selIndex);
+      this.selection.splice(selIndex, 1);
     } else {
       if (this.selection.length < 3) {
         this.selection.push(cardIndex);
