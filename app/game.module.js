@@ -51,12 +51,13 @@ export default class Game {
   }
 
   /** Checks if given triple is valid triad */
-  checkTriple(i) {
+  checkTriple(selection, i) {
     const elements = new Set([
-      this.selection[0][i],
-      this.selection[1][i],
-      this.selection[2][i],
+      selection[0][i],
+      selection[1][i],
+      selection[2][i],
     ]);
+
 
     return elements.size === 3 || elements.size === 1;
   }
@@ -69,8 +70,13 @@ export default class Game {
   /** Checks if the selected combination is correct. */
   isTriad() {
     let score = 0;
-    for (let i = 0; i < this.selection[0].length; i++) {
-      score += +this.checkTriple(i);
+    const selectionData = [];
+    for (let cardId of this.selection) {
+      selectionData.push(this.cards[cardId]);
+    }
+
+    for (let i = 0; i < selectionData[0].length; i++) {
+      score += +this.checkTriple(selectionData, i);
     }
 
     return score === 4;
@@ -78,7 +84,12 @@ export default class Game {
 
   /** Returns element that clicked */
   clickedElement(clickX, clickY) {
-    const cardIndex = this.cardsPositions.findIndex(card => (clickX >= card[0] && clickY >= card[1] && clickX <= card[2] && clickY <= card[3]));
+    const cardIndex = this.cardsPositions.findIndex(card => 
+      (clickX >= card[0] && 
+        clickY >= card[1] && 
+        clickX <= card[2] && 
+        clickY <= card[3])
+    );
 
     // No card is clicked
     if (cardIndex === -1) { return false; }
